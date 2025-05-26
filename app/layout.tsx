@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cohora",
-  description: "Have your people talk to my people",
+  title: "Chat App",
+  description: "Basic chat app",
 };
 
 export default function RootLayout({

@@ -4,6 +4,7 @@ import { Message, useChat } from "@ai-sdk/react";
 import { createIdGenerator } from "ai";
 import { Loader2 } from "lucide-react";
 import { ChatMessage } from "@/components/chat/ChatMessage";
+import { ChatInput } from "@/components/chat/ChatInput";
 
 export default function Chat({ id, initialMessages }: { id: string; initialMessages: Message[] }) {
   const { messages, input, handleInputChange, handleSubmit, status, stop, error, reload } = useChat(
@@ -20,7 +21,7 @@ export default function Chat({ id, initialMessages }: { id: string; initialMessa
   );
 
   return (
-    <>
+    <div className="flex flex-col h-full container mx-auto max-w-screen-lg">
       {messages.map((message) => (
         <ChatMessage key={message.id} message={message} />
       ))}
@@ -43,15 +44,13 @@ export default function Chat({ id, initialMessages }: { id: string; initialMessa
         </>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="prompt"
-          value={input}
-          onChange={handleInputChange}
-          disabled={status !== "ready"}
-        />
-        <button type="submit">Submit</button>
-      </form>
-    </>
+      <ChatInput
+        handleSubmit={handleSubmit}
+        handleInputChange={handleInputChange}
+        input={input}
+        status={status}
+        hasMessages={messages.length > 0}
+      />
+    </div>
   );
 }
