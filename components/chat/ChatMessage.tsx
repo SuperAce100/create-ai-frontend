@@ -6,10 +6,10 @@ export const ChatMessage = ({ message }: { message: Message }) => {
   return (
     <div key={message.id} className="w-full flex flex-col">
       {message.role === "user" ? (
-        <div className="flex flex-col w-fit max-w-80% bg-muted p-2 px-3 rounded-lg ml-auto items-end space-y-1">
-          <div className="text-lg text-foreground">{message.content}</div>
-          <div className="text-xs text-muted-foreground">
-            {"User, " + message.createdAt?.toLocaleString()}
+        <div className="flex flex-col w-fit max-w-80% bg-primary p-2 px-3 border shadow-sm rounded-xl ml-auto items-end space-y-1">
+          <div className="text-lg text-primary-foreground">{message.content}</div>
+          <div className="text-xs text-primary-foreground">
+            {new Date(message.createdAt).toLocaleTimeString()}
           </div>
         </div>
       ) : (

@@ -22,18 +22,21 @@ export default function Chat({ id, initialMessages }: { id: string; initialMessa
   );
 
   return (
-    <div className="flex flex-col h-full overflow-hidden container mx-auto max-w-screen-lg space-y-8 items-center justify-center pt-4 relative">
+    <div className="flex flex-col h-full w-full mx-auto space-y-8 items-center justify-center pt-4 overflow-y-auto">
       {messages.length === 0 && (
         <h1 className="text-6xl font-semibold text-foreground tracking-tight">
           Chat about anything
         </h1>
       )}
 
-      <div className="flex flex-col h-full overflow-y-auto w-full space-y-4 mb-24 pb-8">
-        {messages.map((message) => (
-          <ChatMessage key={message.id} message={message} />
-        ))}
-      </div>
+      {messages.length > 0 && (
+        <div className="flex flex-col w-full space-y-4 max-w-screen-lg px-2 min-h-0 flex-1">
+          {messages.map((message) => (
+            <ChatMessage key={message.id} message={message} />
+          ))}
+          <div className="h-32 w-full min-h-32" />
+        </div>
+      )}
 
       {(status === "submitted" || status === "streaming") && (
         <div>
@@ -59,7 +62,11 @@ export default function Chat({ id, initialMessages }: { id: string; initialMessa
         input={input}
         status={status}
         hasMessages={messages.length > 0}
-        className={messages.length > 0 ? "absolute bottom-4 left-0 right-0 z-10" : "mb-10"}
+        className={
+          messages.length > 0
+            ? "fixed bottom-4 mx-auto z-10 max-w-screen-lg"
+            : "mb-10 max-w-screen-lg"
+        }
       />
     </div>
   );

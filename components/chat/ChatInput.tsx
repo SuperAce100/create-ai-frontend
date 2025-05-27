@@ -28,7 +28,7 @@ export const ChatInput = ({
         onChange={handleInputChange}
         disabled={status !== "ready"}
         placeholder={hasMessages ? "Ask a question" : "Start a new chat"}
-        className="w-full pb-20 pt-6 px-4 rounded-xl text-md bg-background"
+        className="w-full pb-20 pt-6 px-4 rounded-xl text-md bg-background disabled:opacity-100 disabled:cursor-not-allowed disabled:bg-background"
       />
       <Button
         type="submit"
