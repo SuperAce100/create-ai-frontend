@@ -1,6 +1,7 @@
 import { Message } from "ai";
 import { Weather } from "@/components/chat/tools/weather";
 import ReactMarkdown from "react-markdown";
+import { Loader2 } from "lucide-react";
 
 export const ChatMessage = ({ message }: { message: Message }) => {
   return (
@@ -18,7 +19,7 @@ export const ChatMessage = ({ message }: { message: Message }) => {
             <ReactMarkdown>{message.content}</ReactMarkdown>
           </div>
 
-          <div className="text-sm text-muted-foreground">
+          <div>
             {message.toolInvocations?.map((toolInvocation) => {
               const { toolName, toolCallId, state } = toolInvocation;
 
@@ -34,7 +35,11 @@ export const ChatMessage = ({ message }: { message: Message }) => {
               } else {
                 return (
                   <div key={toolCallId}>
-                    {toolName === "displayWeather" ? <div>Loading weather...</div> : null}
+                    {toolName === "displayWeather" ? (
+                      <div className="text-sm text-muted-foreground flex items-center gap-2 flex-row">
+                        <Loader2 className="w-4 h-4 animate-spin" /> Loading...
+                      </div>
+                    ) : null}
                   </div>
                 );
               }

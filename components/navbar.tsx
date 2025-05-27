@@ -17,16 +17,12 @@ const routes = [
     href: "/chat",
     label: "Chat",
   },
-  {
-    href: "/listen",
-    label: "Listen",
-  },
 ];
 
 export function Navbar() {
   return (
     <header className="w-full border bg-background/95 backdrop-blur mx-auto supports-[backdrop-filter]:bg-background/60 p-4 py-2">
-      <div className="container flex h-14 items-center justify-between">
+      <div className="flex h-14 items-center justify-between">
         <Link href="/" className="flex-1 items-center space-x-2">
           <div className="flex items-center space-x-2 pl-2">
             <img src="/logo.svg" alt="Chat" width={30} height={30} />
@@ -38,7 +34,7 @@ export function Navbar() {
             <Link
               key={route.href}
               href={route.href}
-              className="transition-colors text-muted-foreground hover:text-foreground hover:bg-primary/30 rounded-lg px-4 py-2 hover:no-underline"
+              className="transition-colors text-muted-foreground hover:text-foreground hover:bg-primary/10 rounded-lg px-4 py-2 hover:no-underline"
             >
               {route.label}
             </Link>
@@ -47,16 +43,13 @@ export function Navbar() {
             <SignInButton mode="modal">
               <Button
                 variant="ghost"
-                className="text-md font-normal text-muted-foreground hover:text-foreground hover:bg-primary/30 px-4 py-2 hover:no-underline cursor-pointer"
+                className="text-md font-normal text-muted-foreground hover:text-foreground hover:bg-primary/10 px-4 py-2 hover:no-underline cursor-pointer"
               >
                 Sign in
               </Button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <Button
-                variant="default"
-                className="rounded-full px-4 py-2 h-10 text-md hover:no-underline"
-              >
+              <Button variant="default" className="rounded-lg px-4 py-2 text-md hover:no-underline">
                 Sign up
               </Button>
             </SignUpButton>
