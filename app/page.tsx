@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 
 export default function Home() {
   return (
-    <main className="h-full bg-gradient-to-b from-background to-muted">
+    <main className="h-full bg-background">
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
         <h1 className="text-7xl font-medium tracking-tight sm:text-7xl">

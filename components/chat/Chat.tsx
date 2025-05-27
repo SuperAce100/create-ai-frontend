@@ -2,12 +2,13 @@
 
 import { Message, useChat } from "@ai-sdk/react";
 import { createIdGenerator } from "ai";
-import { Loader2 } from "lucide-react";
+import { Loader2, Atom, PenTool, Plane, Brain } from "lucide-react";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { type ModelId } from "@/lib/models";
+import { Button } from "@/components/ui/button";
 
 export default function Chat({ id, initialMessages }: { id: string; initialMessages: Message[] }) {
   const [selectedModel, setSelectedModel] = useState<ModelId>("openai/gpt-4.1-mini");
@@ -29,9 +30,9 @@ export default function Chat({ id, initialMessages }: { id: string; initialMessa
   );
 
   return (
-    <div className="flex flex-col h-full w-full mx-auto space-y-8 items-center justify-center pt-4 overflow-y-auto">
+    <div className="flex flex-col h-full w-full mx-auto items-center justify-center pt-4 overflow-y-auto">
       {messages.length === 0 && (
-        <h1 className="text-6xl font-semibold text-foreground tracking-tight">
+        <h1 className="text-6xl font-semibold text-foreground tracking-tight mb-8">
           Chat about anything
         </h1>
       )}
@@ -74,9 +75,45 @@ export default function Chat({ id, initialMessages }: { id: string; initialMessa
         className={
           messages.length > 0
             ? "fixed bottom-4 mx-auto z-10 max-w-screen-lg"
-            : "mb-10 max-w-screen-lg"
+            : "mb-4 max-w-screen-lg"
         }
       />
+
+      {messages.length === 0 && (
+        <div className="flex flex-col items-center">
+          <div className="grid grid-cols-4 gap-4 max-w-5xl">
+            {[
+              {
+                text: "Explain quantum computing",
+                icon: Atom,
+              },
+              {
+                text: "Write a story about a robot",
+                icon: PenTool,
+              },
+              {
+                text: "Plan a trip to Japan",
+                icon: Plane,
+              },
+              {
+                text: "Explain neural networks",
+                icon: Brain,
+              },
+            ].map(({ text, icon: Icon }) => (
+              <Button
+                key={text}
+                onClick={() => handleInputChange({ target: { value: text } } as any)}
+                variant="outline"
+                className="w-full flex items-center justify-start gap-3"
+              >
+                <Icon className="w-5 h-5 text-primary" />
+                {text}
+              </Button>
+            ))}
+          </div>
+          <div className="h-32" />
+        </div>
+      )}
     </div>
   );
 }

@@ -2,12 +2,12 @@ export const MODELS = [
   {
     id: "openai/gpt-4.1-mini",
     name: "GPT-4.1 Mini",
-    description: "Most capable model, best for complex tasks",
+    description: "OpenAI's small model, best for quick tasks",
   },
   {
     id: "openai/gpt-4.1",
     name: "GPT-4.1",
-    description: "Fast and efficient for most tasks",
+    description: "Most capable model, best for complex tasks",
   },
   {
     id: "anthropic/claude-sonnet-4",
