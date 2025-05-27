@@ -25,6 +25,7 @@ export async function POST(req: Request) {
         }),
       });
     },
+    maxSteps: 50,
   });
 
   return result.toDataStreamResponse();
