@@ -3,16 +3,17 @@ import { appendResponseMessages, streamText } from "ai";
 import { saveChat } from "@/lib/chat-store";
 import { tools } from "@/lib/tools";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { type ModelId } from "@/lib/models";
 
 export async function POST(req: Request) {
-  const { messages, id } = await req.json();
+  const { messages, id, model } = await req.json();
 
   const openrouter = createOpenRouter({
     apiKey: process.env.OPENROUTER_API_KEY,
   });
 
   const result = streamText({
-    model: openrouter("openai/gpt-4o-mini"),
+    model: openrouter(model as ModelId),
     messages,
     tools,
     async onFinish({ response }) {

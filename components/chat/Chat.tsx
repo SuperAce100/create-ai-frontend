@@ -6,8 +6,12 @@ import { Loader2 } from "lucide-react";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { type ModelId } from "@/lib/models";
 
 export default function Chat({ id, initialMessages }: { id: string; initialMessages: Message[] }) {
+  const [selectedModel, setSelectedModel] = useState<ModelId>("openai/gpt-4.1-mini");
+
   const { messages, input, handleInputChange, handleSubmit, status, stop, error, reload } = useChat(
     {
       api: "/api/chat",
@@ -18,6 +22,9 @@ export default function Chat({ id, initialMessages }: { id: string; initialMessa
         size: 16,
       }),
       sendExtraMessageFields: true,
+      body: {
+        model: selectedModel,
+      },
     }
   );
 
@@ -62,6 +69,8 @@ export default function Chat({ id, initialMessages }: { id: string; initialMessa
         input={input}
         status={status}
         hasMessages={messages.length > 0}
+        selectedModel={selectedModel}
+        onModelChange={setSelectedModel}
         className={
           messages.length > 0
             ? "fixed bottom-4 mx-auto z-10 max-w-screen-lg"
