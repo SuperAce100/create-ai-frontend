@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Create AI Frontend
 
-## Getting Started
+A modular, simple, chat frontend for agentic AI apps, built with TypeScript and NextJS using the Vercel AI SDK. Create a chat app in seconds so you can focus on the AI goodness.
 
-First, run the development server:
+## Features
+
+- 🎨 Modern, responsive UI with Tailwind CSS
+- 🔄 Real-time streaming responses
+- 🎯 Multiple model support
+- 🛠️ Easy tool integration
+- 📱 Mobile-friendly design
+- 🎭 Customizable themes
+- 🔒 Type-safe with TypeScript
+
+## Setup
+
+1. Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/SuperAce100/create-ai-frontend.git
+cd create-ai-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm i
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Run the development server:
 
-## Learn More
+```bash
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Configuration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Adding Models
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Add models from [OpenRouter](https://openrouter.ai/models) in `lib/models.ts`:
 
-## Deploy on Vercel
+```typescript
+{
+  id: "anthropic/claude-sonnet-4",
+  name: "Claude Sonnet 4",
+  description: "Anthropic's general purpose model",
+},
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Adding Tools
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Create a new tool in `lib/tools.ts`:
+
+```typescript
+export const yourTool = {
+  name: "your-tool",
+  description: "Description of your tool",
+  parameters: {
+    // Define your parameters
+  },
+  handler: async (params) => {
+    // Implement your tool logic
+  },
+};
+```
+
+2. Create a new component for the tool in `components/chats/tools/`:
+
+```typescript
+type WeatherProps = {
+  temperature: number;
+  weather: string;
+  location: string;
+};
+
+export const Weather = ({ temperature, weather, location }: WeatherProps) => {
+  return (
+    <Card className="bg-sky-500 shadow-lg text-white rounded-xl p-6 px-2 m-4 w-lg relative overflow-hidden">
+      <CardContent className="space-y-2 flex flex-col items-start">
+        <div className="text-2xl font-semibold tracking-tight flex items-center gap-2">
+          {location}
+        </div>
+        <div className="text-8xl font-medium tracking-tight">{temperature}°C</div>
+        <div className="text-lg opacity-90">{weather}</div>
+        <div className="bg-amber-300 rounded-full p-2 absolute -top-10 -right-6 w-40 h-40 shadow-xl shadow-amber-300/50"></div>
+      </CardContent>
+    </Card>
+  );
+};
+```
+
+3. Add it to the generative UI in `components/chat/ChatMessage.tsx`!
+
+```tsx
+<div>
+  {message.toolInvocations?.map((toolInvocation) => {
+    const { toolName, toolCallId, state } = toolInvocation;
+
+    if (state === "result") {
+      if (toolName === "displayWeather") {
+        const { result } = toolInvocation;
+        return (
+          <div key={toolCallId}>
+            <Weather {...result} />
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div key={toolCallId}>
+          {toolName === "displayWeather" ? (
+            <div className="text-sm text-muted-foreground flex items-center gap-2 flex-row">
+              <Loader2 className="w-4 h-4 animate-spin" /> Loading...
+            </div>
+          ) : null}
+        </div>
+      );
+    }
+  })}
+</div>
+```
+
+### Styling
+
+The app uses Tailwind CSS for styling. You can customize:
+
+- Colors in `app/globals.css`
+- Fonts in `app/layout.tsx`
+- Components in `components/ui/` using Shadcn
+
+## Environment Variables
+
+Create a `.env` file:
+
+```bash
+OPENROUTER_API_KEY=sk-or-YOUR_KEY
+```
+
+`
